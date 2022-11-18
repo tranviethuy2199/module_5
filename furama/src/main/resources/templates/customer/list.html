@@ -16,6 +16,79 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
+<!--header-->
+<div class="header">
+    <!--phần header -->
+    <section class="header d-flex justify-content-center" style="background-color: aquamarine">
+        <div class="wrapper d-flex justify-content-between align-items-center">
+            <a href="/home">
+                <img width="150px" height="200px" ;
+                     src="logo.png">
+            </a>
+            <div class="col col-md-auto col-lg-3 d-flex" style="margin-left: 10%">
+                <div class="catalog-widget d-none d-sm-block">
+                    <div class="catalog-widget-inside" style="visibility: visible">
+                        <a
+                                href="https://www.tripadvisor.com/Hotel_Review-g298085-d302750-Reviews-Furama_Resort_Danang-Da_Nang_Quang_Nam_Province.html"
+                                target="_blank"
+                        >
+                            <div class="widget-tripadvisor">
+                                <div class="inside">
+                                    <div class="widget-tripadvisor-logo">
+                                        <img
+                                                src="https://smartdata.tonytemplates.com/bestel/wp-content/uploads/2018/05/widget-tripadvisor-logo.png"
+                                                alt=""
+                                        />
+                                    </div>
+                                    <div class="widget-tripadvisor-rating">
+                                        <img
+                                                src="https://furamavietnam.com/wp-content/uploads/2018/08/widget-tripadvisor-rating.png"
+                                                alt=""
+                                        />
+                                    </div>
+                                    <div class="widget-tripadvisor-text">2,746 Reviews</div>
+                                </div>
+                            </div>
+                        </a>
+                        <span
+                                class="catalog-widget-toggle js-catalog-widget-toggle"
+                        ></span>
+                    </div>
+                </div>
+                <div
+                        class="catalog-widget-mobile d-flex d-sm-none align-items-center mx-auto"
+                ></div>
+            </div>
+            <div class="header__contact d-flex">
+                <div class="address flex-fill">
+                    <div class="d-flex">
+                        <img src="/images/map.svg" alt="" class="me-5" />
+                        <div class="d-flex flex-column">
+                            <p class="fs-5 mb-3 address-size">
+                                103 – 105 Đường Võ Nguyên Giáp, Phường Khuê Mỹ, Quận Ngũ hành
+                                Sơn, Tp. Đà Nẵng, Việt Nam
+                            </p>
+                            <p class="fs-4">
+                                <span class="fs-4">7.0 km</span> từ Sân bay Quốc tế Đà Nẵng
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="phone-email flex-fill">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="/images/telephone.svg" class="me-4" alt="" />
+                        <span class="fs-4 text-dark">84-236-3847 333/888</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img src="/images/envelope.svg" class="me-4" alt="" />
+                        <span class="fs-4 text-dark">reservation@furamavietnam.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!--nav-->
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="/home">Home</a>
@@ -75,57 +148,72 @@
         </div>
     </div>
 </nav>
-<table class="table table-dark table-striped-columns">
-    <thead>
-    <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Birthday</th>
-        <th scope="col">Id Card</th>
-        <th scope="col">Phone Number</th>
-        <th scope="col">Email</th>
-        <th scope="col">Gender</th>
-        <th scope="col">Address</th>
-        <th scope="col">Customer Type</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-    <th:block th:each="customer : ${customer}">
-        <tr>
-            <td th:text="${customer.name}"></td>
-            <td th:text="${customer.dateOfBirth}"></td>
-            <td th:text="${customer.idCard}"></td>
-            <td th:text="${customer.phoneNumber}"></td>
-            <td th:text="${customer.email}"></td>
-            <td th:if="${customer.gender==0}" th:text="Nam"></td>
-            <td th:if="${customer.gender==1}" th:text="Nữ"></td>
-            <td th:if="${customer.gender==2}" th:text="LBGT"></td>
-            <td th:text="${customer.address}"></td>
-            <td th:text="${customer.customerType.name}"></td>
-            <td><a th:href="@{/customer/edit-customer/__${customer.id}__}">EDIT</a></td>
-            <!--                        modal delete-->
-            <td>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#deleteModal"
-                        th:data-customerId="${customer.getId()}"
-                        th:data-customerName="${customer.getName()}"
-                        th:onclick="|showModalDeleteCustomer(this.getAttribute('data-customerId'),this.getAttribute('data-customerName'))|">
-                    Delete
-                </button>
-            </td>
-        </tr>
-    </th:block>
-    </tbody>
-</table>
-<div>
-    <a th:href="@{'/customer'(page=${customer.number - 1})}"
-       th:if="${customer.hasPrevious()}">Previous</a>
-    <span th:text="${customer.number+1}"></span>
-    <span th:text="${customer.totalPages}"></span>
-    <a th:href="@{'/customer'(page=${customer.number + 1})}"
-       th:if="${customer.hasNext()}">Next</a>
+<div class="row" style="padding: 10px">
+    <div class="col-4" >
+        <div>
+            <img src="bbf58ce2b4185c15f734256be8eb8a54.jpg" width="450px" height="250px" style="margin-left: 20px">
+            <h4>Theo Ông Lê Hữu Trường , một trong những khách hàng thân thiện của văn phòng Furama Resort Đà Nẵng:
+                “Furama luôn là sự lựa chọn hàng đầu khi đến với Đà Nẵng”</h4>
+        </div>
+    </div>
+    <div class="col-8">
+        <div>
+            <table class="table table-dark table-striped-columns">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Birthday</th>
+                    <th scope="col">Id Card</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Customer Type</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="customer : ${customer}">
+                    <tr>
+                        <td th:text="${customer.name}"></td>
+                        <td th:text="${customer.dateOfBirth}"></td>
+                        <td th:text="${customer.idCard}"></td>
+                        <td th:text="${customer.phoneNumber}"></td>
+                        <td th:text="${customer.email}"></td>
+                        <td th:if="${customer.gender==0}" th:text="Nam"></td>
+                        <td th:if="${customer.gender==1}" th:text="Nữ"></td>
+                        <td th:if="${customer.gender==2}" th:text="LBGT"></td>
+                        <td th:text="${customer.address}"></td>
+                        <td th:text="${customer.customerType.name}"></td>
+                        <td><a th:href="@{/customer/edit-customer/__${customer.id}__}">EDIT</a></td>
+                        <!--                        modal delete-->
+                        <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal"
+                                    th:data-customerId="${customer.getId()}"
+                                    th:data-customerName="${customer.getName()}"
+                                    th:onclick="|showModalDeleteCustomer(this.getAttribute('data-customerId'),this.getAttribute('data-customerName'))|">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <a th:href="@{'/customer'(page=${customer.number - 1})}"
+               th:if="${customer.hasPrevious()}">Previous</a>
+            <span th:text="${customer.number+1}"></span>
+            <span th:text="${customer.totalPages}"></span>
+            <a th:href="@{'/customer'(page=${customer.number + 1})}"
+               th:if="${customer.hasNext()}">Next</a>
+        </div>
+    </div>
 </div>
+
+
 <script>
     function showModalDeleteCustomer(id, name) {
         $('#nameDelete').text(name)
