@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View</title>
+    <link rel="stylesheet" href="objectives_css.css">
+    <!--    bootstrap css-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<table>
+    <tr>
+        <td>Id:</td>
+        <td th:text="${contract.id}"></td>
+    </tr>
+    <tr>
+        <td>Employee:</td>
+        <td th:text="${contract.employee.name}"></td>
+    </tr>
+    <tr>
+        <td>Customer:</td>
+        <td th:text="${contract.customer.name}"></td>
+    </tr>
+    <tr>
+        <td>Facility Type:</td>
+        <td th:text="${contract.facility.facilityType.name}"></td>
+    </tr>
+    <tr>
+        <td>StartDate:</td>
+        <td th:text="${contract.start_date}"></td>
+    </tr>
+    <tr>
+        <td>EndDate:</td>
+        <td th:text="${contract.end_date}"></td>
+    </tr>
+    <tr>
+        <td>Deposit:</td>
+        <td th:text="${contract.deposit}"></td>
+    </tr>
+    <tr>
+        <td>Attach Service:</td>
+        <td th:text="${attachFacility.name}"></td>
+    </tr>
+    <tr>
+        <td>Cost:</td>
+        <td th:text="${attachFacility.cost}"></td>
+    </tr>
+    <tr>
+        <td>Unit:</td>
+        <td th:text="${attachFacility.unit}"></td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

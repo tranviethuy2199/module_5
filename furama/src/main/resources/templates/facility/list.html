@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="objectives_css.css">
+    <!--    bootstrap css-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/customer}">Customer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/employee}">Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/facility}">Facility</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " th:href="@{/facility/facility/create}">CREATE</a>
+                </li>
+            </ul>
+
+            <form class="d-flex" role="search" action="/facility/find123" method="get">
+                <input class="form-control me-2" aria-label="Search" type="text"
+                       placeholder="Search name"
+                       name="searchName" th:value="*{searchName}">
+
+                <select class="mx-3" name="type">
+                    <option value="">Rent Type</option>
+                    <option th:each="x : ${facilityTypes}" th:text="${x.getName()}" th:value="${x.getId()}"></option>
+                </select>
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<table class="table table-dark table-striped-columns">
+    <thead>
+    <tr>
+        <!--        <th scope="col">#</th>-->
+        <th scope="col">Type</th>
+        <th scope="col">Name</th>
+        <th scope="col">Area</th>
+        <th scope="col">Cost</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Convenience</th>
+        <th scope="col">Floors</th>
+        <th scope="col">Facility_free</th>
+        <th scope="col">Pool_area</th>
+        <th scope="col">Rent Type</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--        <th scope="row">1</th>-->
+    <th:block th:each="facilitie : ${facilities}">
+        <tr>
+            <td th:text="${facilitie.facilityType.name}"></td>
+            <td th:text="${facilitie.name}"></td>
+            <td th:text="${facilitie.area}"></td>
+            <td th:text="${facilitie.cost}"></td>
+            <td th:text="${facilitie.amount}"></td>
+            <td th:text="${facilitie.convenience}"></td>
+            <td th:text="${facilitie.floors}"></td>
+            <td th:text="${facilitie.facility_free}"></td>
+            <td th:text="${facilitie.pool_area}"></td>
+            <td th:text="${facilitie.rentType.note}"></td>
+
+<!--            modal edit-->
+            <td>
+                <button type="button" class="btn btn-warning"
+                        th:attr="onclick=|showModalEditCustomer('${facilitie.facilityType.id}','${facilitie.name}', '${facilitie.area}',
+                     '${facilitie.cost}', '${facilitie.amount}', '${facilitie.convenience}',
+                      '${facilitie.floors}', '${facilitie.facility_free}', '${facilitie.pool_area}',
+                      '${facilitie.rentType.id}','${facilitie.id}')|"
+                        data-bs-toggle="modal" data-bs-target="#editInfoModal">
+                    Edit
+                </button>
+            </td>
+
+<!--            modal delete-->
+            <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal"
+                        th:data-facilityId="${facilitie.getId()}"
+                        th:data-facilityName="${facilitie.getName()}"
+                        th:onclick="|showModalDeleteFacility(this.getAttribute('data-facilityId'),this.getAttribute('data-facilityName'))|">
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+<div>
+    <a th:href="@{'/facility'(page=${facilities.number - 1})}"
+       th:if="${facilities.hasPrevious()}">Previous</a>
+    <span th:text="${facilities.number+1}"></span>
+    <span th:text="${facilities.totalPages}"></span>
+    <a th:href="@{'/facility'(page=${facilities.number + 1})}"
+       th:if="${facilities.hasNext()}">Next</a>
+</div>
+
+<script>
+    function showModalDeleteFacility(id, name) {
+        $('#nameDelete').text(name)
+        $('#modalDelete').modal('show');
+
+        document.getElementById("confirmDelete").value = id;
+    }
+</script>
+<!--Modal Xoá-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Are you sure you want to delete <span style="color: red" id="nameDelete"></span>?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <form action="/facility/delete">
+                    <input hidden type="text" name="id" id="confirmDelete">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal edit-->
+
+<div class="modal fade" id="editInfoModal" tabindex="-1" aria-labelledby="editInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form th:object="${facility}" action="/facility/edit">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="editInfoModalLabel">Edit Facility</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/facility/edit}"
+                          th:object="${facilityEmpty}" method="post" style="width: 450px;
+        height: 450px; margin: 0 auto">
+                        <div class="input-group mb-3">
+                            <input type="text" th:field="*{id}" id="facility-id" hidden>
+                            <span class="input-group-text">@</span>
+                            <select th:field="*{facilityType}" id="facilityType" >-->
+                                <option th:each="item:${facilityTypes}"
+                                        th:value="${item.id}"
+                                        th:text="${item.name}"
+                                        ></option>
+                            </select>
+                            <span class="input-group-text">amount</span>
+                            <input type="text" class="form-control" placeholder="amount / số lượng "
+                                   th:field="*{amount}" id="facility-amount">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" >@</span>
+                            <input type="text" class="form-control" placeholder="name / Tên dịch vụ" aria-label="name"
+                                   aria-describedby="basic-addon1" th:field="*{name}" id="facilityName">
+                        </div>
+                        <div class="input-group mb-3" id="villa">
+                            <span class="input-group-text">@</span>
+                            <input type="text" class="form-control" id="facilityConvenience" placeholder="convenience / tiện nghi"
+                                   aria-label="convenience"
+                                   aria-describedby="basic-addon1" th:field="*{convenience}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Area</span>
+                            <input type="text" class="form-control" id="facilityArea" placeholder="Area / diện tích" th:field="*{area}">
+                            <span class="input-group-text">Cost</span>
+                            <input type="text" class="form-control" id="facilityCost" placeholder="cost / giá" th:field="*{cost}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">@</span>
+                            <input type="text" class="form-control" id="facilityFloors" placeholder="floors / số tầng" th:field="*{floors}">
+                            <span class="input-group-text">@</span>
+                            <input type="text" class="form-control" id="pool-area"
+                                   placeholder="pool_area / diện tích hồ bơi" th:field="*{pool_area}">
+                        </div>
+                        <div class="input-group mb-3" id="room">
+                            <span class="input-group-text">@</span>
+                            <input type="text" class="form-control" id="facilityFree"
+                                   placeholder="facility_free / dịch vụ miễn phí đi kèm" aria-label="facility_free"
+                                   aria-describedby="basic-addon1"
+                                   th:field="*{facility_free}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <select th:field="*{rentType}" id="facilityRentTypes">-->
+                                <option th:each="item:${rentTypes}" th:value="${item.id}"
+                                        th:text="${item.note}"></option>
+                            </select>
+                        </div>
+                        <p>
+                            <input type="submit" value="Create blog">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <!--        <button type="submit" value="close"><a href="/customer"></a></button>-->
+
+                            <!--        <a href="/customer">back</a>-->
+                        </p>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous">
+
+</script>
+
+<!--script edit-->
+<script>
+    function  showModalEditCustomer(facilityType, name ,area, cost,
+                                    amount, convenience,floors, facilityFree,
+                                    poolArea,rentTypeId, id) {
+
+        document.getElementById('facility-id').value = id;
+        document.getElementById('facilityType').value = facilityType;
+        document.getElementById('facilityName').value = name;
+        document.getElementById('facilityArea').value = area;
+        document.getElementById('facilityCost').value = cost;
+        document.getElementById('facility-amount').value = amount;
+        document.getElementById('facilityConvenience').value = convenience;
+        document.getElementById('facilityFloors').value = floors;
+        document.getElementById('facilityFree').value = facilityFree;
+        document.getElementById('pool-area').value = poolArea;
+        document.getElementById('facilityRentTypes').value = rentTypeId;
+    }
+</script>
+<script>
+    $(document).ready(function(){
+        $(document).ready(function(){
+            $("#facilityType").change(function(){
+                if($(this).val() == '1'){
+                    $("#villa").show()
+                    $("#house").hide()
+                    $("#room").hide()
+                }
+                if($(this).val() == '2'){
+                    $("#house").show()
+                    $("#villa_room").show()
+                    $("#room").hide()
+                    $("#villa").hide()
+                    $("#standardRoom").hide()
+                    $("#floor_rooms").hide()
+
+
+                }
+                if($(this).val() == '3'){
+                    $("#room").show()
+                    $("#villa").hide()
+                    $("#house").hide()
+                    $("#floor_rooms").hide()
+                    $("#convenience").hide()
+                }
+            });
+
+        });
+
+    });
+</script>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="objectives_css.css">
+    <!--    bootstrap css-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<form th:action="@{/contract/contract/create}" th:object="${contract}" method="post" style="width: 500px;
+        height: 500px; margin: 0 auto">
+    <div class="modal-body">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Start Date</span>
+            <input th:field="*{start_date}"
+                   type="date" class="form-control" placeholder="dd/mm/yyyy" aria-label="startDate"
+                   aria-describedby="basic-addon1">
+            <span class="input-group-text">End Date</span>
+            <input th:field="*{end_date}"
+                   type="date" class="form-control" placeholder="dd/mm/yyyy" aria-label="endDate"
+                   aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Deposit</span>
+            <input th:field="*{deposit}"
+                   type="text" class="form-control" aria-label="deposit"
+                   aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Customer</span>
+            <select class="form-select" th:field="*{customer}">
+                <option th:value="-1">--</option>
+                <option th:each="x : ${customers}" th:text="${x.getName()}"
+                        th:value="${x.getId()}"></option>
+            </select>
+            <span class="input-group-text">Employee</span>
+            <select class="form-select" th:field="*{employee}">
+                <option th:value="-1">--</option>
+                <option th:each="x : ${employees}" th:text="${x.getName()}"
+                        th:value="${x.getId()}"></option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Facility</span>
+            <select class="form-select facility" th:field="*{facility}">
+                <option th:value="-1">--</option>
+                <option th:each="x : ${facilities}" th:text="${x.getName()}"
+                        th:value="${x.getId()}"></option>
+            </select>
+            <span class="input-group-text">Attach Facility</span>
+            <button type="button" class="btn btn-primary" id="btn-add-att">
+                +
+            </button>
+            <div id="show-att">
+                <select>
+                    <option th:each="att : ${attachFacilities}"
+                            th:text="${att.name +' | '+ att.cost +' | '+ att.unit }"
+                            th:value="${att.id}">
+                    </option>
+                </select> <br>
+                <label for="quality-contract-detail">Quality: </label>
+                <input type="text" id="quality-contract-detail">
+            </div>
+            <p class="attachFacilityMess" style="margin-left: 10px"></p>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Total Money</span>
+            <input
+                   value="0"
+                   disabled
+                   style="background-color: dimgrey; color: white" type="text"
+                   class="form-control totalMoneyCreate"
+                   id="totalMoneyCreate"
+                   aria-label="totalMoney"
+                   aria-describedby="basic-addon1">
+        </div>
+<!--        <div hidden class="input-group mb-3">-->
+<!--            <span class="input-group-text">Contract Detail List</span>-->
+<!--            <input th:field="*{contractDetailsString}"-->
+<!--                   type="text" id="contractDetailString">-->
+<!--        </div>-->
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary closeCreateContract"
+                    data-bs-dismiss="modal">Close
+            </button>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+
+    </div>
+</form>
+</body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous">
+
+</script>
+<script>
+
+    $('#show-att').hide();
+
+    $('#btn-add-att').click(function () {
+        $('#show-att').toggle();
+    });
+    function attachFacility(attachId){
+        document.getElementById(attachId);
+        console.log(attachId);
+    }
+</script>
+</html>

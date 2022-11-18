@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="objectives_css.css">
+    <!--    bootstrap css-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/customer}">Customer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/employee}">Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/facility}">Facility</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " th:href="@{/contract/contract/create}">CREATE</a>
+                </li>
+            </ul>
+
+            <form class="d-flex" role="search" method="get">
+                <input class="form-control me-2" aria-label="Search" type="text"
+                       placeholder="Search name"
+                       name="searchName">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<table class="table table-dark table-striped-columns">
+    <thead>
+    <tr>
+        <!--        <th scope="col">#</th>-->
+        <th scope="col">id</th>
+        <th scope="col">Employee Name</th>
+        <th scope="col">Customer Name</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Deposit</th>
+        <th scope="col">Facility Name</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+        <th scope="col">Attach</th>
+        <!--        <th scope="col">Attach Facility</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <!--        <th scope="row">1</th>-->
+    <th:block th:each="contract : ${contracts}">
+        <tr>
+            <td th:text="${contract.id}"></td>
+            <td th:text="${contract.employee.name}"></td>
+            <td th:text="${contract.customer.name}"></td>
+            <td th:text="${contract.start_date}"></td>
+            <td th:text="${contract.end_date}"></td>
+            <td th:text="${contract.deposit}"></td>
+            <td th:text="${contract.facility.facilityType.name}"></td>
+            <td>Edit</td>
+            <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal"
+                        th:data-contractId="${contract.getId()}"
+                        th:onclick="|showModalDeleteContract(this.getAttribute('data-contractId'))|">
+                    Delete
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary nut"
+                        data-bs-target="#attachViewModal"
+                        data-bs-toggle="modal"
+                        th:value="${contract.getId()}">
+                    Attach Facility
+                </button>
+            </td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+<div>
+    <a th:href="@{'/contract'(page=${contracts.number - 1})}"
+       th:if="${contracts.hasPrevious()}">Previous</a>
+    <span th:text="${contracts.number+1}"></span>
+    <span th:text="${contracts.totalPages}"></span>
+    <a th:href="@{'/contract'(page=${contracts.number + 1})}"
+       th:if="${contracts.hasNext()}">Next</a>
+</div>
+
+<script>
+    function showModalDeleteContract(id, name) {
+        $('#nameDelete').text(name)
+        $('#idDelete').text(id)
+        $('#modalDelete').modal('show');
+
+        document.getElementById("confirmDelete").value = id;
+    }
+</script>
+
+<!--modal view Attach-->
+<div class="modal fade" id="attachViewModal" tabindex="-1" aria-labelledby="attachViewModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="attachViewModalLabel">Attach View</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>name</th>
+                            <th>cost</th>
+                            <th>unit</th>
+<!--                            <th>quantity</th>-->
+                        </tr>
+                        </thead>
+                        <tbody class="viewAF">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <form action="/contract">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Xoá-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Are you sure you want to delete contract number <span style="color: red" id="idDelete"></span>?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <form action="/contract/delete">
+                    <input hidden type="text" name="id" id="confirmDelete">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous">
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".btn.btn-primary.nut").click(function showModalViewAttach() {
+            let idContract = $(this).val();
+            $.ajax({
+                url: "http://localhost:8080/api/attach/v1?id=" + idContract,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // alert(data.id);
+                    // alert(data.name);
+                    // alert(data.cost);
+                    // alert(data.unit);
+                    let tr = [];
+                    for (let i = 0; i < data.length; i++) {
+                        tr.push("<tr>")
+                        tr.push("<td>" + data[i].id + "</td>")
+                        tr.push("<td>" + data[i].name + "</td>")
+                        tr.push("<td>" + data[i].cost + "</td>")
+                        tr.push("<td>" + data[i].unit + "</td>")
+                        // tr.push("<td>" + data[i].quantity + "</td>")
+                        tr.push("</tr>")
+                    }
+                    $(".viewAF").empty();
+                    $(".viewAF").append(tr.join(""));
+                }
+            });
+
+        })
+    })
+
+</script>
+
+</html>
