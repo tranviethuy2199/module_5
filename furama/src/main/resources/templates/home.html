@@ -197,10 +197,12 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
+<!--header and drop menu-->
 <div class="container-web">
     <div class="logo"><img width="150px" height="200px" ;
                            src="logo.png">
     </div>
+<!--    menu chính diện-->
     <div class="wrapper">
         <ul class="menu">
             <li class="menu-item"><a href="" class="menu-link">ROOM</a>
@@ -241,12 +243,28 @@
             </li>
         </ul>
     </div>
-    <div id="mainnav">
+
+<!--    left menu-->
+    <div id="mainnav" style="padding: 25px">
         <ul>
-            <li class="thefirst"><a href="#">Service</a>
+<!--            language-->
+            <li class="thefirst">
+                <a href="#">Language</a>
+                <ul class="sub-menu">
+                    <li><a href="#">English</a></li>
+                    <li><a href="#">Tiếng Việt</a></li>
+                    <li><a href="#">中文 (中国)</a></li>
+                    <li><a href="#">한국어</a></li>
+                    <li><a href="#">日本語</a></li>
+                </ul>
+            </li>
+<!--            service-->
+            <li>
+                <a href="#">Service</a>
                 <ul class="sub-menu">
                     <li><a href="#">CONTRACT</a>
                         <ul class="sub-menu2">
+<!--                            contract-->
                             <li><a href="/contract">CONTRACT</a>
 <!--                                <ul class="sub-menu2">-->
 <!--                                    <li><a href="#">VILLA</a></li>-->
@@ -257,6 +275,7 @@
                             <li><a href="#">CONTRACT</a></li>
                         </ul>
                     </li>
+<!--                    facility-->
                     <li><a href="#">FACILITY</a>
                         <ul class="sub-menu2">
                             <li><a href="/facility/facility/create">ADD NEW FACILITY</a></li>
@@ -289,6 +308,7 @@
                     </li>
                 </ul>
             </li>
+<!--            customer-->
             <li><a href="#">Customer</a>
                 <ul class="sub-menu">
                     <li><a href="/customer/customer/create">ADD NEW CUSTOMER</a>
@@ -307,6 +327,7 @@
                     </li>
                 </ul>
             </li>
+<!--            employee-->
             <li><a href="#">Employee</a>
                 <ul class="sub-menu">
                     <li><a href="/employee/employee/create">ADD NEW EMPLOYEE</a>
@@ -326,7 +347,6 @@
             </li>
             <li><a href="#">item 3</a></li>
             <li><a href="#">item 4</a></li>
-            <li><a href="#">item 5</a></li>
         </ul>
     </div>
     <div style="height: 200px">
@@ -413,8 +433,6 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
-<!--<footer style="text-align: center ; background-color: #3B5998">-->
-<!--    BY-VIET HUY-->
 <!--</footer>-->
 <div class="footer" style="background-color: cadetblue">
     <div class="col-lg-">

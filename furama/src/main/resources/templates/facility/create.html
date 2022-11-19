@@ -88,6 +88,7 @@
         </div>
     </section>
 </div>
+<!--navbar-->
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="/home">Home</a>
@@ -139,6 +140,7 @@
         </div>
     </div>
 </nav>
+<!--body content-->
 <div class="row" style="padding: 10px">
     <div class="col-4" >
         <div>
@@ -232,14 +234,6 @@
                 </p>
             </form>
 
-        </div>
-        <div>
-            <a th:href="@{'/customer'(page=${customer.number - 1})}"
-               th:if="${customer.hasPrevious()}">Previous</a>
-            <span th:text="${customer.number+1}"></span>
-            <span th:text="${customer.totalPages}"></span>
-            <a th:href="@{'/customer'(page=${customer.number + 1})}"
-               th:if="${customer.hasNext()}">Next</a>
         </div>
     </div>
 </div>
