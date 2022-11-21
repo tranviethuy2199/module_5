@@ -1,5 +1,5 @@
 {
-  "name": "excercisen",
+  "name": "TypescriptProject",
   "version": "1.0.0",
   "dependencies": {
     "typescript": "^4.1.5"
