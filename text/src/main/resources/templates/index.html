@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" ,
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Bến Xe Miền Trung</title>
+</head>
+<body>
+<div>
+    <h1>Blog list</h1>
+    <div style="color: cornflowerblue ; padding: 10px">
+        <p>
+            <a href="/index">Create new blog</a>
+        </p>
+    </div>
+    <form action="#">
+        Find Blogger by username<br>
+        <input type="text" name="bloggerName" placeholder="input Blogger Name">
+        <button type="submit">enter</button>
+    </form>
+    <table border="1">
+        <thead>
+        <tr>
+            <td>Điểm đi</td>
+            <td>Điểm đến</td>
+            <td>Ngày khởi hành</td>
+            <td>Giờ khởi hành</td>
+            <td>Nhà xe</td>
+            <td>Số lượng</td>
+            <td>Giá vé</td>
+            <td>Edit</td>
+            <td>Delete</td>
+        </tr>
+
+        </thead>
+        <tbody>
+        <th:block th:each="tickers : ${tickers}">
+            <tr>
+                <td th:text="${tickers.departure}"></td>
+                <td th:text="${tickers.destination}"></td>
+                <td th:text="${tickers.departureDay}"></td>
+                <td th:text="${tickers.departureTime}"></td>
+                <td th:text="${tickers.garage.garage_name}"></td>
+                <td th:text="${tickers.price}"></td>
+                <td th:text="${tickers.amount}"></td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
